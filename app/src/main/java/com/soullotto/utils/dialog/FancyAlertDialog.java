@@ -85,7 +85,7 @@ public class FancyAlertDialog {
 
 
         public Builder setPositiveBtnText(String positiveBtnText){
-            this.positiveBtnText=positiveBtnText;
+            this.positiveBtnText = positiveBtnText;
             return this;
         }
 
