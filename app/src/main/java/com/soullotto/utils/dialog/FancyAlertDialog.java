@@ -52,6 +52,7 @@ public class FancyAlertDialog {
 
     public static class Builder{
         private String title,message,message2,positiveBtnText,negativeBtnText;
+        private int negativeBtnVisibility = View.VISIBLE;
         private Activity activity;
         private int icon;
         private Icon visibility;
@@ -88,6 +89,11 @@ public class FancyAlertDialog {
             this.positiveBtnText = positiveBtnText;
             return this;
 
+        }
+
+        public Builder setNegativeBtnVisibility(int visibility) {
+            this.negativeBtnVisibility = visibility;
+            return this;
         }
 
         public Builder setPositiveBtnBackground(int pBtnColor){
@@ -177,6 +183,9 @@ public class FancyAlertDialog {
             }
             if(negativeBtnText!=null)
             nBtn.setText(negativeBtnText);
+
+            nBtn.setVisibility(negativeBtnVisibility);
+
             iconImg.setImageResource(icon);
             if(visibility==Icon.Visible)
             iconImg.setVisibility(View.VISIBLE);

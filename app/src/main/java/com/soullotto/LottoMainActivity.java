@@ -1,51 +1,148 @@
 package com.soullotto;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.CalendarView;
 import android.widget.Toast;
 
+import com.codetroopers.betterpickers.calendardatepicker.CalendarDatePickerDialogFragment;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.reward.RewardItem;
+import com.google.android.gms.ads.reward.RewardedVideoAd;
+import com.google.android.gms.ads.reward.RewardedVideoAdListener;
 import com.soullotto.soullotto.R;
+import com.soullotto.soulnumber.LottoCreator;
 import com.soullotto.utils.dialog.Animation;
 import com.soullotto.utils.dialog.FancyAlertDialog;
 import com.soullotto.utils.dialog.FancyAlertDialogListener;
 import com.soullotto.utils.dialog.Icon;
 
-public class LottoMainActivity extends AppCompatActivity {
+import java.util.Calendar;
+
+public class LottoMainActivity extends AppCompatActivity implements RewardedVideoAdListener {
+
+    private static final String ADMOB_ID = "ca-app-pub-1611757228618027~9373727028";
+    private static final String ADMOB_REWARD_ID = "ca-app-pub-1611757228618027/6901855127";
+
+    private RewardedVideoAd mRewardedVideoAd;
+
+    private LottoCreator lottoCreator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        showSoulNumberDialog();
+        MobileAds.initialize(this, ADMOB_ID);
+        mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(this);
+        mRewardedVideoAd.setRewardedVideoAdListener(this);
+
+
+        loadRewardedVideoAd();
+
+        CalendarDatePickerDialogFragment cdp = new CalendarDatePickerDialogFragment()
+                .setOnDateSetListener(new CalendarDatePickerDialogFragment.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(CalendarDatePickerDialogFragment dialog, int year, int monthOfYear, int dayOfMonth) {
+                        String birthDayYmdt = String.valueOf(year) + String.valueOf(monthOfYear + 1) + String.valueOf(dayOfMonth);
+
+                        //소울넘서 생성을 위한 lottoCreator 초기화
+                        lottoCreator = new LottoCreator(Integer.parseInt(birthDayYmdt));
+                        showSoulNumberDialog(lottoCreator.getSoulNumber());
+                    }
+                })
+                .setFirstDayOfWeek(Calendar.SUNDAY)
+                .setCancelText(null)
+                .setDoneText("확인");
+
+        cdp.show(getSupportFragmentManager(), "tag");
+
     }
 
-    private void showSoulNumberDialog() {
+    @Override
+    protected void onResume() {
+        mRewardedVideoAd.resume(this);
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        mRewardedVideoAd.pause(this);
+        super.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        mRewardedVideoAd.destroy(this);
+        super.onDestroy();
+    }
+
+    /**
+     * admob 비디오 광고 로딩
+     */
+    private void loadRewardedVideoAd() {
+        mRewardedVideoAd.loadAd(ADMOB_REWARD_ID, new AdRequest.Builder().build());
+    }
+
+    private void showSoulNumberDialog(int soulNumber) {
         new FancyAlertDialog.Builder(this)
                 .setTitle("당신의 소울 넘버는...")
                 .setBackgroundColor(Color.parseColor("#303F9F"))
                 .setMessage2("입니다!")
-                .setMessage("8")
-                .setNegativeBtnText("해석보기")
+                .setMessage(String.valueOf(soulNumber))
                 .setPositiveBtnText("시작하기")
                 .setPositiveBtnBackground(Color.parseColor("#FF4081"))
                 .setNegativeBtnBackground(Color.parseColor("#FFA9A7A8"))
                 .setAnimation(Animation.POP)
                 .isCancellable(true)
                 .setIcon(R.drawable.ic_star_border_black_24dp,Icon.Visible)
+                .setNegativeBtnVisibility(View.GONE)
                 .OnPositiveClicked(new FancyAlertDialogListener() {
                     @Override
                     public void OnClick() {
-                        Toast.makeText(getApplicationContext(),"시작--",Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .OnNegativeClicked(new FancyAlertDialogListener() {
-                    @Override
-                    public void OnClick() {
-                        Toast.makeText(getApplicationContext(),"해석--",Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(LottoMainActivity.this, SoulNumberActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
                     }
                 })
                 .build();
     }
+
+    @Override
+    public void onRewardedVideoAdLoaded() {
+    }
+
+    @Override
+    public void onRewardedVideoAdOpened() {}
+
+    @Override
+    public void onRewardedVideoStarted() {}
+
+    @Override
+    public void onRewardedVideoAdClosed() {
+        loadRewardedVideoAd();
+    }
+
+    @Override
+    public void onRewarded(RewardItem rewardItem) {
+
+    }
+
+    @Override
+    public void onRewardedVideoAdLeftApplication() {}
+
+    @Override
+    public void onRewardedVideoAdFailedToLoad(int i) {
+        Toast.makeText(this, String.valueOf(i), Toast.LENGTH_SHORT).show();
+        mRewardedVideoAd.loadAd(ADMOB_REWARD_ID, new AdRequest.Builder().build());
+
+    }
+
+    @Override
+    public void onRewardedVideoCompleted() {}
+
 }

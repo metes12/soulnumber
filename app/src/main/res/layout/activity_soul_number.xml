@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/view_animation"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:lottie_fileName="lego_loader.json"
+        app:lottie_loop="true"
+        app:lottie_autoPlay="true" />
 
     <ImageView
         android:id="@+id/imgv_crystal"

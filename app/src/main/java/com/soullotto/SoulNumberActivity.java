@@ -16,7 +16,7 @@ public class SoulNumberActivity extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_calender);
+        setContentView(R.layout.activity_soul_number);
         imgvCrystal = findViewById(R.id.imgv_crystal);
 
         Glide.with(this)
