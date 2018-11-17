@@ -1,8 +1,10 @@
 package com.soullotto.soulnumber;
 
+import java.util.Arrays;
+
 public abstract class SoulNumberAbstract {
 
-    private int birthDay;
+    int birthDay;
 
     public SoulNumberAbstract(int birthDay) {
         this.birthDay = birthDay;
@@ -15,7 +17,7 @@ public abstract class SoulNumberAbstract {
     public abstract int[] getLottoNumberArray();
 
     //new Random() 클래스를 사용하여 45까지 숫자 6개 배열을 생성하여 리턴
-    //단, 소울넘버 1개를 포함한다.
-    public abstract int[] getLottoNumberArrayWithSoulNumber();
+    //입력된 숫자를 포함하거나 제외한다.
+    public abstract int[] getIncludeExcept(int[] exceptArray, int[] includeArray);
 
 }
