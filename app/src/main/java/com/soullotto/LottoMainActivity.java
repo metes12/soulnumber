@@ -44,23 +44,6 @@ public class LottoMainActivity extends AppCompatActivity implements RewardedVide
 
         loadRewardedVideoAd();
 
-        CalendarDatePickerDialogFragment cdp = new CalendarDatePickerDialogFragment()
-                .setOnDateSetListener(new CalendarDatePickerDialogFragment.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(CalendarDatePickerDialogFragment dialog, int year, int monthOfYear, int dayOfMonth) {
-                        String birthDayYmdt = String.valueOf(year) + String.valueOf(monthOfYear + 1) + String.valueOf(dayOfMonth);
-
-                        //소울넘서 생성을 위한 lottoCreator 초기화
-                        lottoCreator = new LottoCreator(Integer.parseInt(birthDayYmdt));
-                        showSoulNumberDialog(lottoCreator.getSoulNumber());
-                    }
-                })
-                .setFirstDayOfWeek(Calendar.SUNDAY)
-                .setCancelText(null)
-                .setDoneText("확인");
-
-        cdp.show(getSupportFragmentManager(), "tag");
-
     }
 
     @Override
@@ -86,30 +69,6 @@ public class LottoMainActivity extends AppCompatActivity implements RewardedVide
      */
     private void loadRewardedVideoAd() {
         mRewardedVideoAd.loadAd(ADMOB_REWARD_ID, new AdRequest.Builder().build());
-    }
-
-    private void showSoulNumberDialog(int soulNumber) {
-        new FancyAlertDialog.Builder(this)
-                .setTitle("당신의 소울 넘버는...")
-                .setBackgroundColor(Color.parseColor("#303F9F"))
-                .setMessage2("입니다!")
-                .setMessage(String.valueOf(soulNumber))
-                .setPositiveBtnText("시작하기")
-                .setPositiveBtnBackground(Color.parseColor("#FF4081"))
-                .setNegativeBtnBackground(Color.parseColor("#FFA9A7A8"))
-                .setAnimation(Animation.POP)
-                .isCancellable(true)
-                .setIcon(R.drawable.ic_star_border_black_24dp,Icon.Visible)
-                .setNegativeBtnVisibility(View.GONE)
-                .OnPositiveClicked(new FancyAlertDialogListener() {
-                    @Override
-                    public void OnClick() {
-                        Intent intent = new Intent(LottoMainActivity.this, SoulNumberActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(intent);
-                    }
-                })
-                .build();
     }
 
     @Override
