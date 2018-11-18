@@ -1,10 +1,8 @@
 package com.soullotto;
 
-import android.Manifest;
 import android.os.Bundle;
 import android.support.annotation.FloatRange;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
@@ -28,27 +26,28 @@ public class IntroActivity extends MaterialIntroActivity {
         super.onCreate(savedInstanceState);
 
         addSlide(new SlideFragmentBuilder()
-                .backgroundColor(R.color.bpRed)
+                .backgroundColor(R.color.radial_gray_light)
                 .buttonsColor(R.color.colorAccent)
                 .image(R.drawable.lotto_machine)
                 .title("Soul Lotto")
+                .textColor(R.color.bpWhite)
                 .description("Soul Lotto에 오신 것을 환영합니다!")
                 .build());
 
         addSlide(new SlideFragmentBuilder()
-                .backgroundColor(R.color.bpBlue)
+                .backgroundColor(R.color.bpWhite)
                 .buttonsColor(R.color.colorAccent)
                 .image(R.drawable.lotto_ball_intro)
-                .title("Soul Lotto")
-                .description("Soul Lotto는 생년월일 및 오늘의 숫자를 바탕으로\n로또 번호를 이쁘게 뽑아줍니다")
+                .textColor(R.color.bpWhite)
+                .description("Soul Lotto는\n생년월일 및\n오늘의 숫자를 바탕으로\n로또 번호를 이쁘게 뽑아줍니다")
                 .build());
 
         addSlide(new SlideFragmentBuilder()
-                .backgroundColor(R.color.bpRed)
+                .backgroundColor(R.color.bpWhite)
                 .buttonsColor(R.color.colorAccent)
                 .image(R.drawable.lotto_machine)
-                .title("Soul Lotto")
-                .description("운명의 숫자, 오늘의 숫자가 궁금하신가요?\n소울로또를 시작해봅시다!")
+                .textColor(R.color.bpWhite)
+                .description("운명의 숫자\n오늘의 숫자가 궁금하신가요?\n소울로또를 시작해봅시다!")
                 .build(), new MessageButtonBehaviour(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

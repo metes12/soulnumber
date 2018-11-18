@@ -12,9 +12,15 @@ public class SlideFragmentBuilder {
     String[] neededPermissions;
     String[] possiblePermissions;
     int image;
+    int textColor;
 
     public SlideFragmentBuilder backgroundColor(@ColorRes int backgroundColor) {
         this.backgroundColor = backgroundColor;
+        return this;
+    }
+
+    public SlideFragmentBuilder textColor(@ColorRes int textColor) {
+        this.textColor = textColor;
         return this;
     }
 

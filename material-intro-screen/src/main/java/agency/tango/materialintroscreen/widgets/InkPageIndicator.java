@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.database.DataSetObserver;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
@@ -550,7 +551,8 @@ public class InkPageIndicator extends View implements CustomViewPager.OnPageChan
     public void setPageIndicatorColor(int secondaryColor) {
         unselectedColour = secondaryColor;
         unselectedPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        unselectedPaint.setColor(unselectedColour);
+        unselectedPaint.setColor(Color.GRAY);
+        selectedPaint.setColor(Color.RED);
     }
 
     @Override

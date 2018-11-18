@@ -366,12 +366,15 @@ public abstract class MaterialIntroActivity extends AppCompatActivity {
     @SuppressWarnings("PointlessBooleanExpression")
     private void nextButtonBehaviour(final int position, final SlideFragment fragment) {
         boolean hasPermissionToGrant = fragment.hasNeededPermissionsToGrant();
+        nextButton.setVisibility(View.VISIBLE);
+
         if (hasPermissionToGrant) {
             nextButton.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_next));
             nextButton.setOnClickListener(permissionNotGrantedClickListener);
         } else if (adapter.isLastSlide(position)) {
             nextButton.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_finish));
             nextButton.setOnClickListener(finishScreenClickListener);
+            nextButton.setVisibility(View.INVISIBLE);
         } else {
             nextButton.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_next));
             nextButton.setOnClickListener(new View.OnClickListener() {
@@ -443,7 +446,6 @@ public abstract class MaterialIntroActivity extends AppCompatActivity {
         private void setViewsColor(int position, float offset) {
             int backgroundColor = getBackgroundColor(position, offset);
             viewPager.setBackgroundColor(backgroundColor);
-            messageButton.setTextColor(backgroundColor);
 
             int buttonsColor = getButtonsColor(position, offset);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

@@ -7,7 +7,6 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.view.View;
 
-import com.soullotto.LottoMainActivity;
 import com.soullotto.SoulNumberActivity;
 import com.soullotto.commons.Constants;
 import com.soullotto.soullotto.R;
@@ -15,6 +14,10 @@ import com.soullotto.utils.dialog.Animation;
 import com.soullotto.utils.dialog.FancyAlertDialog;
 import com.soullotto.utils.dialog.FancyAlertDialogListener;
 import com.soullotto.utils.dialog.Icon;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class DialogHelper {
 
@@ -36,6 +39,7 @@ public class DialogHelper {
                     public void OnClick() {
                         SharedPreferences sp = activity.getPreferences(Context.MODE_PRIVATE);
                         sp.edit().putInt(Constants.PARAM_USER_BIRTHDAY, soulNumber).apply();
+                        sp.edit().putString(Constants.PARAM_SOUL_DAY, new SimpleDateFormat("EEE MMM dd kk:mm:ss z yyyy", Locale.KOREA).toString()).apply();
 
                         Intent intent = new Intent(activity, SoulNumberActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

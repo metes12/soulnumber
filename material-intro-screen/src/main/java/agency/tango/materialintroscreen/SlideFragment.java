@@ -19,6 +19,7 @@ import agency.tango.materialintroscreen.parallax.ParallaxFragment;
 
 public class SlideFragment extends ParallaxFragment {
     private final static String BACKGROUND_COLOR = "background_color";
+    private final static String TEXT_COLOR = "text_color";
     private static final String BUTTONS_COLOR = "buttons_color";
     private static final String TITLE = "title";
     private static final String DESCRIPTION = "description";
@@ -28,6 +29,7 @@ public class SlideFragment extends ParallaxFragment {
     private static final int PERMISSIONS_REQUEST_CODE = 15621;
 
     private int backgroundColor;
+    private int textColor;
     private int buttonsColor;
     private int image;
     private String title;
@@ -44,6 +46,7 @@ public class SlideFragment extends ParallaxFragment {
 
         Bundle bundle = new Bundle();
         bundle.putInt(BACKGROUND_COLOR, builder.backgroundColor);
+        bundle.putInt(TEXT_COLOR, builder.textColor);
         bundle.putInt(BUTTONS_COLOR, builder.buttonsColor);
         bundle.putInt(IMAGE, builder.image);
         bundle.putString(TITLE, builder.title);
@@ -73,6 +76,7 @@ public class SlideFragment extends ParallaxFragment {
     public void initializeView() {
         Bundle bundle = getArguments();
         backgroundColor = bundle.getInt(BACKGROUND_COLOR);
+        textColor = bundle.getInt(TEXT_COLOR);
         buttonsColor = bundle.getInt(BUTTONS_COLOR);
         image = bundle.getInt(IMAGE, 0);
         title = bundle.getString(TITLE);
@@ -85,6 +89,10 @@ public class SlideFragment extends ParallaxFragment {
 
     public int backgroundColor() {
         return backgroundColor;
+    }
+
+    public int textColor() {
+        return textColor;
     }
 
     public int buttonsColor() {
