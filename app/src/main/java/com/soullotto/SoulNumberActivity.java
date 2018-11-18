@@ -26,7 +26,7 @@ import com.soullotto.utils.SoulNumberHelper;
 public class SoulNumberActivity extends Activity implements RewardedVideoAdListener {
 
     private static final String ADMOB_ID = "ca-app-pub-1611757228618027~9373727028";
-    private static final String ADMOB_REWARD_ID = "ca-app-pub-1611757228618027/6901855127";
+    private static final String ADMOB_REWARD_ID = "ca-app-pub-2862102477506412/7524525861";
     public static final int MS_SHAKE_TIME = 4000;
 
     private LottoCreator lottoCreator;

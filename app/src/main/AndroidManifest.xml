@@ -24,7 +24,7 @@
             android:name="com.soullotto.IntroActivity"
             android:theme="@style/Theme.Intro" />
 
-        <activity android:name="com.soullotto.SplashActivity">
+        <activity android:name="com.soullotto.NumberInterpretActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
