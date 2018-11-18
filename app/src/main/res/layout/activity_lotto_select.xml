@@ -15,8 +15,10 @@
         android:layout_height="wrap_content" />
 
     <GridLayout
+        android:layout_centerInParent="true"
+        android:layout_below="@+id/txtv_select"
         android:id="@+id/table_layout"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
     <Button

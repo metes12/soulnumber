@@ -20,11 +20,12 @@
             android:value="ca-app-pub-1611757228618027~9373727028" />
 
         <activity android:name="com.soullotto.SoulNumberActivity" />
+        <activity android:name="com.soullotto.LottoSelectAcivity" />
         <activity
             android:name="com.soullotto.IntroActivity"
             android:theme="@style/Theme.Intro" />
 
-        <activity android:name="com.soullotto.NumberInterpretActivity">
+        <activity android:name="com.soullotto.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

@@ -33,6 +33,8 @@ public class LottoSelectAcivity extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setContentView(R.layout.activity_lotto_select);
+
         String type = getIntent().getStringExtra(KEY_TYPE);
         TextView textView = findViewById(R.id.txtv_select);
         btnSelectDone = findViewById(R.id.btn_select_done);
@@ -43,11 +45,10 @@ public class LottoSelectAcivity extends Activity {
             textView.setText("포함할 숫자를 선택하세요.");
         }
 
-        setContentView(R.layout.activity_lotto_select);
         gridLayout = findViewById(R.id.table_layout);
         gridLayout.setColumnCount(5);
 
-        int btnSize = (int)dpToPixel(50f);
+        int btnSize = (int)dpToPixel(40f);
         for (int i=0; i<45; i++) {
             ToggleButton button = new ToggleButton(LottoSelectAcivity.this);
             button.setTextOn(String.valueOf(i + 1));
