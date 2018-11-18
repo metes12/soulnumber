@@ -53,9 +53,8 @@ public class SoulNumberActivity extends Activity implements RewardedVideoAdListe
 
         linearLayoutNumbers = findViewById(R.id.linerv_numbers);
         imgvSoul.setText(String.valueOf(lottoCreator.getSoulNumber()));
-        imgvToday.setText(String.valueOf(lottoCreator.getSoulNumber()));
+        imgvToday.setText(String.valueOf(lottoCreator.getTodayNumber(this)));
 
-        Toast.makeText(this, SoulNumberHelper.getSoulNumberDate(this).toString(), Toast.LENGTH_SHORT).show();
     }
 
     private void initializeAdmob() {

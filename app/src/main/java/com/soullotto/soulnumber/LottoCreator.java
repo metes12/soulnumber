@@ -1,10 +1,14 @@
 package com.soullotto.soulnumber;
 
+import android.app.Activity;
 import android.support.v4.math.MathUtils;
+
+import com.soullotto.utils.SoulNumberHelper;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -20,32 +24,31 @@ public class LottoCreator extends SoulNumberAbstract {
     @Override
     //19880710 이 들어온다고 가정하고.. 로직 수정
     public int getSoulNumber() {
-        int dummyBirthDay = 19990929;
         List<Integer> soulNumber = new ArrayList<Integer>();
         List<Integer> soulNumber45 = new ArrayList<Integer>();
         int digit = 0;
         int sum = 0;
 
         //birthday split
-        while (dummyBirthDay > 0) {
-            digit = dummyBirthDay % 10;
-            dummyBirthDay /= 10;
+        while (birthDay > 0) {
+            digit = birthDay % 10;
+            birthDay /= 10;
             soulNumber.add(digit);
         }
 
         //digit sum
-        for(int i = 0; i < soulNumber.size();i++) {
+        for (int i = 0; i < soulNumber.size(); i++) {
             sum += soulNumber.get(i);
         }
 
         // 45 over
         if (sum > 45) {
-            while(sum > 0) {
+            while (sum > 0) {
                 digit = sum % 10;
                 sum /= 10;
                 soulNumber45.add(digit);
             }
-            for(int j = 0; j < soulNumber45.size(); j++) {
+            for (int j = 0; j < soulNumber45.size(); j++) {
                 sum += soulNumber45.get(j);
             }
         }
@@ -95,7 +98,7 @@ public class LottoCreator extends SoulNumberAbstract {
         int randomNumber;
         HashSet<Integer> set = new HashSet<>();
 
-        for(int includeIndex = 0; includeIndex < includeArray.length; includeIndex++) {
+        for (int includeIndex = 0; includeIndex < includeArray.length; includeIndex++) {
             set.add(includeArray[includeIndex]);
         }
 
@@ -124,4 +127,24 @@ public class LottoCreator extends SoulNumberAbstract {
         return lottoArray;
     }
 
+    @Override
+    public int getTodayNumber(Activity activity) {
+        int todayNumber;
+        Random r = new Random();
+        todayNumber = (r.nextInt(44) + 1);
+
+        boolean isNewDay = SoulNumberHelper.isNewDate(activity, new Date());
+
+        if (isNewDay) {
+            SoulNumberHelper.saveTodayNumber(activity, todayNumber);
+            return todayNumber;
+        } else {
+            return SoulNumberHelper.getTodayNumber(activity);
+        }
+    }
 }
+
+
+
+
+

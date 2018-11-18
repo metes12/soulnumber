@@ -1,6 +1,7 @@
 package com.soullotto.utils;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 
 import com.soullotto.commons.Constants;
 
@@ -11,18 +12,41 @@ import java.util.Date;
 import java.util.Locale;
 
 public class SoulNumberHelper {
-    public static Date getSoulNumberDate(Activity activity) {
-        String dateString = activity.getPreferences(Activity.MODE_PRIVATE).getString(Constants.PARAM_USER_BIRTHDAY, "");
 
+    public static void saveTodayNumber(Activity activity, int todayNumber) {
+        SharedPreferences sp = activity.getPreferences(Activity.MODE_PRIVATE);
+        sp.edit().putInt(Constants.PARAM_TODAY_NUMBER, todayNumber).apply();
+    }
+
+    public static int getTodayNumber(Activity activity) {
+        SharedPreferences sp = activity.getPreferences(Activity.MODE_PRIVATE);
+        int todayNumber = sp.getInt(Constants.PARAM_TODAY_NUMBER, 1);
+
+        return todayNumber;
+    }
+
+    public static boolean isNewDate(Activity activity, Date currentTime) {
+        SharedPreferences sp = activity.getPreferences(Activity.MODE_PRIVATE);
+        String dateString = sp.getString(Constants.PARAM_TODAY_TIME, "");
+
+        DateFormat df = new SimpleDateFormat("EEE MMM dd kk:mm:ss z yyyy", Locale.KOREA);
+        Date lastDate;
         if (dateString.isEmpty()) {
-            return new Date();
+            sp.edit().putString(Constants.PARAM_TODAY_TIME, df.toString()).apply();
+            lastDate = new Date();
         } else {
-            DateFormat df = new SimpleDateFormat("EEE MMM dd kk:mm:ss z yyyy", Locale.KOREA);
             try {
-                return  df.parse(dateString);
+                lastDate = df.parse(dateString);
             } catch (ParseException e) {
-                return new Date();
+                lastDate = new Date();
             }
+        }
+
+        if (currentTime.after(lastDate) && currentTime.getDate() != lastDate.getDate()) {
+            sp.edit().putString(Constants.PARAM_TODAY_TIME, df.toString()).apply();
+            return true;
+        } else {
+            return false;
         }
     }
 }

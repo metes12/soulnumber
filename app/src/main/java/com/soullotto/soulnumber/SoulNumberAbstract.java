@@ -1,5 +1,7 @@
 package com.soullotto.soulnumber;
 
+import android.app.Activity;
+
 import java.util.Arrays;
 
 public abstract class SoulNumberAbstract {
@@ -19,5 +21,7 @@ public abstract class SoulNumberAbstract {
     //new Random() 클래스를 사용하여 45까지 숫자 6개 배열을 생성하여 리턴
     //입력된 숫자를 포함하거나 제외한다.
     public abstract int[] getIncludeExcept(int[] exceptArray, int[] includeArray);
+
+    public abstract int getTodayNumber(Activity activity);
 
 }

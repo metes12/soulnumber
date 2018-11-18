@@ -39,7 +39,6 @@ public class DialogHelper {
                     public void OnClick() {
                         SharedPreferences sp = activity.getPreferences(Context.MODE_PRIVATE);
                         sp.edit().putInt(Constants.PARAM_USER_BIRTHDAY, soulNumber).apply();
-                        sp.edit().putString(Constants.PARAM_SOUL_DAY, new SimpleDateFormat("EEE MMM dd kk:mm:ss z yyyy", Locale.KOREA).toString()).apply();
 
                         Intent intent = new Intent(activity, SoulNumberActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
