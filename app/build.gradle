@@ -53,5 +53,7 @@ dependencies {
     implementation project(path: ':introLib')
     implementation project(path: ':material-intro-screen')
 
+    //버튼 라이브러리
+    implementation 'info.hoang8f:fbutton:1.0.5'
 
 }

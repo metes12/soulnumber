@@ -1,6 +1,7 @@
 package com.soullotto;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
@@ -44,7 +45,7 @@ public class SoulNumberActivity extends Activity implements RewardedVideoAdListe
 
         initializeAdmob();
 
-        lottoCreator = new LottoCreator(getPreferences(MODE_PRIVATE).getInt(Constants.PARAM_USER_BIRTHDAY, 1));
+        lottoCreator = new LottoCreator(SoulNumberHelper.getBirthDay(getApplicationContext()));
 
         imgvSoul = findViewById(R.id.imgv_soul);
         imgvToday = findViewById(R.id.imgv_today);

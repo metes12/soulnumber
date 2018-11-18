@@ -58,7 +58,7 @@ public class IntroActivity extends MaterialIntroActivity {
                             public void onDateSet(CalendarDatePickerDialogFragment dialog, int year, int monthOfYear, int dayOfMonth) {
                                 String birthDayYmdt = String.valueOf(year) + String.valueOf(monthOfYear + 1) + String.valueOf(dayOfMonth);
                                 LottoCreator lottoCreator = new LottoCreator(Integer.parseInt(birthDayYmdt));
-                                DialogHelper.showSoulNumberDialog(IntroActivity.this, lottoCreator.getSoulNumber());
+                                DialogHelper.showSoulNumberDialog(IntroActivity.this, lottoCreator.getSoulNumber(), Integer.parseInt(birthDayYmdt));
                             }
                         })
                         .setFirstDayOfWeek(Calendar.SUNDAY)

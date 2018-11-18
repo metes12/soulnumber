@@ -1,17 +1,14 @@
 package com.soullotto.soulnumber;
 
 import android.app.Activity;
-import android.support.v4.math.MathUtils;
 
 import com.soullotto.utils.SoulNumberHelper;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
@@ -133,7 +130,7 @@ public class LottoCreator extends SoulNumberAbstract {
         Random r = new Random();
         todayNumber = (r.nextInt(44) + 1);
 
-        boolean isNewDay = SoulNumberHelper.isNewDate(activity, new Date());
+        boolean isNewDay = SoulNumberHelper.isNewDay(activity, new Date());
 
         if (isNewDay) {
             SoulNumberHelper.saveTodayNumber(activity, todayNumber);

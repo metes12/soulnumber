@@ -21,7 +21,7 @@ import java.util.Locale;
 
 public class DialogHelper {
 
-    public static void showSoulNumberDialog(final Activity activity, final int soulNumber) {
+    public static void showSoulNumberDialog(final Activity activity, final int soulNumber, final int birthDay) {
         new FancyAlertDialog.Builder(activity)
                 .setTitle("당신의 소울 넘버는...")
                 .setBackgroundColor(Color.parseColor("#303F9F"))
@@ -37,8 +37,7 @@ public class DialogHelper {
                 .OnPositiveClicked(new FancyAlertDialogListener() {
                     @Override
                     public void OnClick() {
-                        SharedPreferences sp = activity.getPreferences(Context.MODE_PRIVATE);
-                        sp.edit().putInt(Constants.PARAM_USER_BIRTHDAY, soulNumber).apply();
+                        SoulNumberHelper.saveBirthDay(birthDay, activity.getApplicationContext());
 
                         Intent intent = new Intent(activity, SoulNumberActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

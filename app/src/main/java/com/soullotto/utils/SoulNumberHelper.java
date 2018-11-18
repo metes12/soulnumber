@@ -1,7 +1,9 @@
 package com.soullotto.utils;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import com.soullotto.commons.Constants;
 
@@ -10,41 +12,64 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Random;
 
 public class SoulNumberHelper {
 
+    public static void saveBirthDay(int birthDay, Context context) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt(Constants.PARAM_USER_BIRTHDAY, birthDay);
+        editor.commit();
+    }
+
+    public static int getBirthDay(Context context) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return preferences.getInt(Constants.PARAM_USER_BIRTHDAY, 1);
+    }
+
     public static void saveTodayNumber(Activity activity, int todayNumber) {
-        SharedPreferences sp = activity.getPreferences(Activity.MODE_PRIVATE);
-        sp.edit().putInt(Constants.PARAM_TODAY_NUMBER, todayNumber).apply();
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity.getApplicationContext());
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt(Constants.PARAM_TODAY_NUMBER, todayNumber);
+        editor.commit();
     }
 
     public static int getTodayNumber(Activity activity) {
-        SharedPreferences sp = activity.getPreferences(Activity.MODE_PRIVATE);
-        int todayNumber = sp.getInt(Constants.PARAM_TODAY_NUMBER, 1);
-
-        return todayNumber;
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity.getApplicationContext());
+        return preferences.getInt(Constants.PARAM_TODAY_NUMBER, 1);
     }
 
-    public static boolean isNewDate(Activity activity, Date currentTime) {
-        SharedPreferences sp = activity.getPreferences(Activity.MODE_PRIVATE);
-        String dateString = sp.getString(Constants.PARAM_TODAY_TIME, "");
+    public static void saveTodayTime(Activity activity, Date todayTime) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity.getApplicationContext());
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(Constants.PARAM_TODAY_TIME, todayTime.toString());
+        editor.commit();
+    }
 
-        DateFormat df = new SimpleDateFormat("EEE MMM dd kk:mm:ss z yyyy", Locale.KOREA);
-        Date lastDate;
-        if (dateString.isEmpty()) {
-            sp.edit().putString(Constants.PARAM_TODAY_TIME, df.toString()).apply();
-            lastDate = new Date();
+    public static Date getTodayTime(Activity activity) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity.getApplicationContext());
+        String todayTimeString = preferences.getString(Constants.PARAM_TODAY_TIME, "");
+        if (todayTimeString.isEmpty()) {
+            return null;
         } else {
-            try {
-                lastDate = df.parse(dateString);
-            } catch (ParseException e) {
-                lastDate = new Date();
-            }
+            return new Date(todayTimeString);
         }
+    }
 
-        if (currentTime.after(lastDate) && currentTime.getDate() != lastDate.getDate()) {
-            sp.edit().putString(Constants.PARAM_TODAY_TIME, df.toString()).apply();
+    public static boolean isNewDay(Activity activity, Date currentTime) {
+        Date lastDate = getTodayTime(activity);
+
+        if (lastDate != null && currentTime.after(lastDate) && currentTime.getDate() != lastDate.getDate()) {
+            saveTodayTime(activity, new Date());
             return true;
+        } else if (lastDate == null) {
+            Random r = new Random();
+            int todayNumber = (r.nextInt(44) + 1);
+            SoulNumberHelper.saveTodayNumber(activity, todayNumber);
+            saveTodayTime(activity, new Date());
+
+            return false;
         } else {
             return false;
         }
