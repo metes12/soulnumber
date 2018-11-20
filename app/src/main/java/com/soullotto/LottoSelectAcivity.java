@@ -3,6 +3,7 @@ package com.soullotto;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.TypedValue;
@@ -15,7 +16,9 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import com.soullotto.commons.Constants;
 import com.soullotto.soullotto.R;
+import com.soullotto.utils.BallHelper;
 
 import java.util.ArrayList;
 
@@ -48,37 +51,26 @@ public class LottoSelectAcivity extends Activity {
         gridLayout = findViewById(R.id.table_layout);
         gridLayout.setColumnCount(5);
 
-        int btnSize = (int)dpToPixel(40f);
         for (int i=0; i<45; i++) {
-            ToggleButton button = new ToggleButton(LottoSelectAcivity.this);
-            button.setTextOn(String.valueOf(i + 1));
-            button.setTextOff(String.valueOf(i + 1));
-            button.setBackground(getResources().getDrawable(R.drawable.toggle_selector));
-            button.setLayoutParams(new ViewGroup.LayoutParams(btnSize, btnSize));
-            button.setText(String.valueOf(i + 1));
-            gridLayout.addView(button);
+            ToggleButton toggleButton = BallHelper.makeNumberBallToggle(this, i + 1);
+            gridLayout.addView(toggleButton);
         }
     }
 
     public void onDoneButtonClicked(View v) {
         ArrayList<Integer> arrayList = new ArrayList<>();
         for (int i = 0; i < gridLayout.getChildCount(); i++) {
-            String selectedString = ((ToggleButton)gridLayout.getChildAt(i)).getText().toString();
-            arrayList.add(Integer.parseInt(selectedString));
+            ToggleButton button = (ToggleButton)gridLayout.getChildAt(i);
+
+            if (button.isChecked()) {
+                String selectedString = button.getText().toString();
+                arrayList.add(Integer.parseInt(selectedString));
+            }
         }
 
         Intent intent = new Intent();
-        intent.putExtra(KEY_SELECTED, arrayList);
+        intent.putIntegerArrayListExtra(KEY_SELECTED, arrayList);
         setResult(RESULT_OK, intent);
         finish();
-    }
-
-    private float dpToPixel(float dp) {
-        Resources r = getResources();
-        return TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP,
-                dp,
-                r.getDisplayMetrics()
-        );
     }
 }

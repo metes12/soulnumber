@@ -1,43 +1,56 @@
 package com.soullotto;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
+import android.util.TypedValue;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
+import android.widget.ToggleButton;
 
-import com.airbnb.lottie.LottieAnimationView;
-import com.bumptech.glide.Glide;
-import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.reward.RewardItem;
-import com.google.android.gms.ads.reward.RewardedVideoAd;
-import com.google.android.gms.ads.reward.RewardedVideoAdListener;
 import com.soullotto.commons.Constants;
 import com.soullotto.soullotto.R;
+import com.soullotto.soulnumber.ColorBall;
 import com.soullotto.soulnumber.LottoCreator;
+import com.soullotto.utils.BallHelper;
 import com.soullotto.utils.SoulNumberHelper;
 
-public class SoulNumberActivity extends Activity implements RewardedVideoAdListener {
+import java.util.ArrayList;
+import java.util.List;
+
+public class SoulNumberActivity extends Activity {
 
     private static final String ADMOB_ID = "ca-app-pub-1611757228618027~9373727028";
     private static final String ADMOB_REWARD_ID = "ca-app-pub-1611757228618027/6901855127";
+
     public static final int MS_SHAKE_TIME = 4000;
+
+    public static final int REQ_CODE_SELECT_NUMBER_INCLUDE = 1;
+    public static final int REQ_CODE_SELECT_NUMBER_EXCEPT = 2;
 
     private LottoCreator lottoCreator;
     private Button imgvSoul;
     private Button imgvToday;
-    private Button btnLotto;
+    private ImageView btnLotto;
     private LinearLayout imgvShake;
     private LinearLayout linearLayoutNumbers;
+    private LinearLayout linearLayoutExcept;
+    private LinearLayout linearLayoutInclude;
+    private GridLayout gridLotto;
 
-    private RewardedVideoAd mRewardedVideoAd;
+    private List<Integer> exceptList = new ArrayList<>();
+    private List<Integer> includeList = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,29 +66,33 @@ public class SoulNumberActivity extends Activity implements RewardedVideoAdListe
         imgvShake = findViewById(R.id.linearv_shake);
         btnLotto = findViewById(R.id.btn_get_lotto);
 
+        linearLayoutExcept = findViewById(R.id.linearv_except);
+        linearLayoutInclude = findViewById(R.id.linearv_include);
+
+        gridLotto = findViewById(R.id.gridv_lotto);
+
         linearLayoutNumbers = findViewById(R.id.linerv_numbers);
         imgvSoul.setText(String.valueOf(lottoCreator.getSoulNumber()));
         imgvToday.setText(String.valueOf(lottoCreator.getTodayNumber(this)));
 
+        BallHelper.makeColorBall(imgvSoul);
+        BallHelper.makeColorBall(imgvToday);
     }
 
     private void initializeAdmob() {
         MobileAds.initialize(this, ADMOB_ID);
-        mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(this);
-        mRewardedVideoAd.setRewardedVideoAdListener(this);
-        loadRewardedVideoAd();
     }
 
     public void onIncludeButtonClicked(View view) {
         Intent intent = new Intent(this, LottoSelectAcivity.class);
         intent.putExtra(LottoSelectAcivity.KEY_TYPE, LottoSelectAcivity.TYPE_INCLUDE);
-        startActivity(intent);
+        startActivityForResult(intent, REQ_CODE_SELECT_NUMBER_INCLUDE);
     }
 
     public void onExceptButtonClicked(View view) {
         Intent intent = new Intent(this, LottoSelectAcivity.class);
         intent.putExtra(LottoSelectAcivity.KEY_TYPE, LottoSelectAcivity.TYPE_EXCEPT);
-        startActivity(intent);
+        startActivityForResult(intent, REQ_CODE_SELECT_NUMBER_EXCEPT);
     }
 
     public void onLottoButtonClicked(View view) {
@@ -93,6 +110,19 @@ public class SoulNumberActivity extends Activity implements RewardedVideoAdListe
                         btnLotto.setVisibility(View.VISIBLE);
                         imgvShake.setVisibility(View.GONE);
                         linearLayoutNumbers.setVisibility(View.VISIBLE);
+
+                        int [] exceptArray = BallHelper.convertIntegers(exceptList);
+                        int [] includeArray = BallHelper.convertIntegers(includeList);
+
+                        gridLotto.removeAllViews();
+
+                        for (int i = 0; i < 5; i++) {
+                            int[] lotto = lottoCreator.getIncludeExcept(exceptArray, includeArray);
+
+                            for (int j = 0; j < lotto.length; j++) {
+                                gridLotto.addView(BallHelper.makeNumberBall(SoulNumberActivity.this, lotto[j]));
+                            }
+                        }
                     }
                 });
             }
@@ -100,61 +130,24 @@ public class SoulNumberActivity extends Activity implements RewardedVideoAdListe
     }
 
     @Override
-    protected void onResume() {
-        mRewardedVideoAd.resume(this);
-        super.onResume();
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQ_CODE_SELECT_NUMBER_INCLUDE) {
+            includeList = data.getIntegerArrayListExtra(LottoSelectAcivity.KEY_SELECTED);
+
+            linearLayoutInclude.removeAllViews();
+            for (int index = 0; index < includeList.size(); index++) {
+                linearLayoutInclude.addView(BallHelper.makeNumberBall(this, includeList.get(index)));
+            }
+        } else if (requestCode == REQ_CODE_SELECT_NUMBER_EXCEPT) {
+            exceptList = data.getIntegerArrayListExtra(LottoSelectAcivity.KEY_SELECTED);
+
+            linearLayoutExcept.removeAllViews();
+            for (int index = 0; index < exceptList.size(); index++) {
+                linearLayoutExcept.addView(BallHelper.makeNumberBall(this, exceptList.get(index)));
+            }
+        }
     }
-
-    @Override
-    protected void onPause() {
-        mRewardedVideoAd.pause(this);
-        super.onPause();
-    }
-
-    @Override
-    protected void onDestroy() {
-        mRewardedVideoAd.destroy(this);
-        super.onDestroy();
-    }
-
-    /**
-     * admob 비디오 광고 로딩
-     */
-    private void loadRewardedVideoAd() {
-        mRewardedVideoAd.loadAd(ADMOB_REWARD_ID, new AdRequest.Builder().build());
-    }
-
-    @Override
-    public void onRewardedVideoAdLoaded() {
-    }
-
-    @Override
-    public void onRewardedVideoAdOpened() {}
-
-    @Override
-    public void onRewardedVideoStarted() {}
-
-    @Override
-    public void onRewardedVideoAdClosed() {
-        loadRewardedVideoAd();
-    }
-
-    @Override
-    public void onRewarded(RewardItem rewardItem) {
-
-    }
-
-    @Override
-    public void onRewardedVideoAdLeftApplication() {}
-
-    @Override
-    public void onRewardedVideoAdFailedToLoad(int i) {
-        Toast.makeText(this, String.valueOf(i), Toast.LENGTH_SHORT).show();
-        mRewardedVideoAd.loadAd(ADMOB_REWARD_ID, new AdRequest.Builder().build());
-
-    }
-
-    @Override
-    public void onRewardedVideoCompleted() {}
 
 }

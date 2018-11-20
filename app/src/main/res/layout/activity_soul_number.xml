@@ -3,38 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:fab="http://schemas.android.com/tools">
-
-    <com.github.clans.fab.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="27dp"
-        android:src="@drawable/fab_add"
-        fab:fab_colorNormal="@color/app_primary"
-        fab:fab_colorPressed="@color/app_primary_pressed"
-        fab:fab_colorRipple="@color/app_ripple" />
-
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_marginBottom="160dp"
-        android:layout_marginRight="15sp"
-        android:visibility="invisible"
-        app:backgroundTint="#ffffff"
-        app:elevation="6dp"
-        app:pressedTranslationZ="12dp" />
+    android:background="@color/bpWhite">
 
     <LinearLayout
         android:id="@+id/linearv_shake"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_centerInParent="true"
         android:orientation="vertical"
         android:visibility="gone">
@@ -62,109 +36,168 @@
     <LinearLayout
         android:id="@+id/linerv_numbers"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="#EB6460"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="horizontal">
+            android:background="#F1B136">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
+                android:src="@drawable/settings" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
 
-                <TextView
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="소울 넘버"
+                        android:textColor="@color/bpWhite"
+                        android:textSize="16dp"
+                        android:textStyle="bold" />
+
+                    <Button
+                        android:id="@+id/imgv_soul"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/ic_number_on"
+                        android:backgroundTint="@color/bpBlue"
+                        android:textColor="@color/bpWhite" />
+
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:text="소울 넘버" />
+                    android:layout_marginLeft="20dp"
+                    android:orientation="vertical">
 
-                <Button
-                    android:id="@+id/imgv_soul"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/ic_number_on"
-                    android:textColor="@color/bpWhite" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="오늘의 숫자"
+                        android:textColor="@color/bpWhite"
+                        android:textSize="16dp"
+                        android:textStyle="bold" />
+
+                    <Button
+                        android:id="@+id/imgv_today"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/ic_number_on"
+                        android:textColor="@color/bpWhite" />
+
+                </LinearLayout>
 
             </LinearLayout>
 
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#13B0A5"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/txtv_except"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
+                    android:text="제외할 숫자"
+                    android:textColor="@color/bpWhite"
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="15dp"
+                    android:onClick="onExceptButtonClicked"
+                    android:src="@drawable/settings" />
+
+            </RelativeLayout>
+
             <LinearLayout
+                android:id="@+id/linearv_except"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginLeft="20dp"
-                android:orientation="vertical">
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="20dp"
+                android:orientation="horizontal"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginTop="5dp">
 
                 <TextView
+                    android:id="@+id/txtv_include"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:text="오늘의 숫자" />
-
-                <Button
-                    android:id="@+id/imgv_today"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
+                    android:layout_centerInParent="true"
                     android:layout_gravity="center"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/ic_number_on"
-                    android:textColor="@color/bpWhite" />
+                    android:text="포함할 숫자"
+                    android:textColor="@color/bpWhite"
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
 
-            </LinearLayout>
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="15dp"
+                    android:onClick="onIncludeButtonClicked"
+                    android:src="@drawable/settings" />
 
-        </LinearLayout>
+            </RelativeLayout>
 
-
-        <TextView
-            android:id="@+id/txtv_except"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="30dp"
-            android:text="제외할 숫자" />
-
-        <LinearLayout
-            android:id="@+id/linearv_except"
-            android:layout_width="80dp"
-            android:layout_height="35dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal">
-
-            <Button
-                android:onClick="onExceptButtonClicked"
-                android:text="선택하기"
-                android:id="@+id/btn_except"
+            <LinearLayout
+                android:id="@+id/linearv_include"
                 android:layout_width="wrap_content"
-                android:layout_height="40dp" />
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/txtv_include"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
-            android:text="포함할 숫자" />
-
-        <LinearLayout
-            android:id="@+id/linearv_include"
-            android:layout_width="80dp"
-            android:layout_height="35dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal">
-
-            <Button
-                android:onClick="onIncludeButtonClicked"
-                android:id="@+id/btn_include"
-                android:text="선택하기"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp" />
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal"/>
 
         </LinearLayout>
 
@@ -172,15 +205,18 @@
             android:id="@+id/txtv_lotto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
-            android:text="가즈아-!" />
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:text="☆"
+            android:textColor="@color/bpWhite"
+            android:textSize="22dp"
+            android:textStyle="bold" />
 
         <GridLayout
-            android:id="@+id/linearv_lotto"
+            android:layout_gravity="center"
+            android:id="@+id/gridv_lotto"
             android:layout_width="wrap_content"
-            android:layout_height="35dp"
-            android:layout_marginLeft="20dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:columnCount="6"
             android:orientation="horizontal" />
@@ -188,14 +224,14 @@
 
     </LinearLayout>
 
-    <Button
+    <ImageView
         android:id="@+id/btn_get_lotto"
-        android:layout_width="200dp"
+        android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="40dp"
+        android:layout_marginBottom="20dp"
         android:onClick="onLottoButtonClicked"
-        android:text="추출하기" />
+        android:src="@drawable/coins" />
 
 </RelativeLayout>
