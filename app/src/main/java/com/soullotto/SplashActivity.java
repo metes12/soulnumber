@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
-import com.soullotto.IntroActivity;
-import com.soullotto.SoulNumberActivity;
 import com.soullotto.utils.SoulNumberHelper;
 
 public class SplashActivity extends Activity {
