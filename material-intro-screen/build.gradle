@@ -52,6 +52,18 @@ android {
         })
         implementation "com.android.support:appcompat-v7:25.0.1"
         implementation "com.android.support:design:25.0.1"
+
+        implementation ('com.airbnb.android:lottie:2.7.0', {
+            transitive = true
+            exclude group: 'com.android.support', module: 'appcompat-v7'
+            exclude group: 'com.android.support', module: 'recyclerview-v7'
+            exclude group: 'com.android.support', module: 'design'
+            exclude group: 'com.android.support', module: 'support-v4'
+            exclude group: 'com.squareup.retrofit2', module: 'retrofit'
+            exclude group: 'com.squareup.retrofit2', module: 'retrofit'
+            exclude group: 'com.google.code.gson', module: 'gson'
+            exclude module: 'guava'
+        })
     }
 
 }

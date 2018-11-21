@@ -1,9 +1,11 @@
 package com.soullotto.soulnumber;
 
 import android.app.Activity;
+import android.os.SystemClock;
 
 import com.soullotto.utils.SoulNumberHelper;
 
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -54,7 +56,7 @@ public class LottoCreator extends SoulNumberAbstract {
 
     @Override
     public int[] getLottoNumberArray() {
-        Random r = new Random();
+        SecureRandom r = new SecureRandom();
         int randomNumber;
         HashSet<Integer> set = new HashSet<>();
 
@@ -91,12 +93,13 @@ public class LottoCreator extends SoulNumberAbstract {
     //getIncludeExcept를 이용해서 소울넘버가 포함된 로또 배열 6개 리턴
     @Override
     public int[] getIncludeExcept(int[] exceptArray, int[] includeArray) {
-        Random r = new Random();
+        SecureRandom r = new SecureRandom();
         int randomNumber;
         HashSet<Integer> set = new HashSet<>();
 
         for (int includeIndex = 0; includeIndex < includeArray.length; includeIndex++) {
             set.add(includeArray[includeIndex]);
+            SystemClock.sleep(r.nextInt(20));
         }
 
         while (set.size() < 6) {
@@ -111,6 +114,7 @@ public class LottoCreator extends SoulNumberAbstract {
 
             if (!isExceptNumber) {
                 set.add(randomNumber);
+                SystemClock.sleep(r.nextInt(20));
             }
         }
 
@@ -127,7 +131,7 @@ public class LottoCreator extends SoulNumberAbstract {
     @Override
     public int getTodayNumber(Activity activity) {
         int todayNumber;
-        Random r = new Random();
+        SecureRandom r = new SecureRandom();
         todayNumber = (r.nextInt(44) + 1);
 
         boolean isNewDay = SoulNumberHelper.isNewDay(activity, new Date());

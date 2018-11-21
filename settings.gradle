@@ -1,1 +1,1 @@
-include ':app', ':calender', ':introLib', ':material-intro-screen'
+include ':app', ':calender', ':material-intro-screen', ':rfab-library'

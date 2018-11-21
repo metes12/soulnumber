@@ -78,7 +78,7 @@ public class BallHelper {
         view.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(ColorBall.getColorByNumber(number).getColor())));
     }
 
-    private static float dpToPixel(Context context, float dp) {
+    public static float dpToPixel(Context context, float dp) {
         Resources r = context.getResources();
         return TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP,

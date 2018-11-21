@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.airbnb.lottie.LottieAnimationView;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -37,7 +39,7 @@ public class SlideFragment extends ParallaxFragment {
 
     private TextView titleTextView;
     private TextView descriptionTextView;
-    private ImageView imageView;
+    private LottieAnimationView imageView;
 
     public static SlideFragment createInstance(SlideFragmentBuilder builder) {
         SlideFragment slideFragment = new SlideFragment();
@@ -65,9 +67,39 @@ public class SlideFragment extends ParallaxFragment {
         View view = inflater.inflate(R.layout.fragment_slide, container, false);
         titleTextView = (TextView) view.findViewById(R.id.txt_title_slide);
         descriptionTextView = (TextView) view.findViewById(R.id.txt_description_slide);
-        imageView = (ImageView) view.findViewById(R.id.image_slide);
+        imageView = (LottieAnimationView) view.findViewById(R.id.image_slide);
         initializeView();
+
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (isVisible()) {
+            imageView.playAnimation();
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        imageView.cancelAnimation();
+
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+
+        if (imageView != null) {
+            if (isVisibleToUser) {
+                imageView.playAnimation();
+            } else {
+                imageView.cancelAnimation();
+            }
+        }
     }
 
     public void initializeView() {
@@ -116,8 +148,10 @@ public class SlideFragment extends ParallaxFragment {
         descriptionTextView.setText(description);
 
         if (image != 0) {
-            imageView.setImageDrawable(ContextCompat.getDrawable(getActivity(), image));
+            imageView.setAnimation(image);
             imageView.setVisibility(View.VISIBLE);
+            imageView.useHardwareAcceleration(true);
+            imageView.enableMergePathsForKitKatAndAbove(true);
         }
     }
 

@@ -1,19 +1,15 @@
 package com.soullotto;
 
 import android.annotation.SuppressLint;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.FloatRange;
 import android.support.annotation.Nullable;
 import android.view.View;
-import android.widget.Toast;
 
 import com.codetroopers.betterpickers.calendardatepicker.CalendarDatePickerDialogFragment;
 import com.soullotto.soullotto.R;
-import com.soullotto.soulnumber.ColorBall;
 import com.soullotto.soulnumber.LottoCreator;
 import com.soullotto.utils.DialogHelper;
-import com.soullotto.utils.SoulNumberHelper;
 
 import java.util.Calendar;
 
@@ -31,45 +27,32 @@ public class IntroActivity extends MaterialIntroActivity {
         super.onCreate(savedInstanceState);
 
         addSlide(new SlideFragmentBuilder()
-                .backgroundColor(R.color.red)
+                .backgroundColor(R.color.yellow)
                 .buttonsColor(R.color.colorAccent)
-                .image(R.drawable.lotto_machine)
-                .title("Soul Lotto")
-                .description("Soul Lotto에 오신 것을\n환영합니다!")
+                .image(R.raw.favourite_app_icon)
+                .title(getString(R.string.soul_lotto_title))
+                .description(getString(R.string.soul_lotto_description_1))
                 .build());
 
         addSlide(new SlideFragmentBuilder()
                 .backgroundColor(R.color.green)
                 .buttonsColor(R.color.colorAccent)
-                .image(R.drawable.lotto_ball_intro)
-                .description("Soul Lotto는\n생년월일 및\n오늘의 숫자를 바탕으로\n로또 번호를 이쁘게 뽑아줍니다")
+                .image(R.raw.gears)
+                .description(getString(R.string.soul_lotto_description_2))
                 .build());
 
         addSlide(new SlideFragmentBuilder()
-                .backgroundColor(R.color.bpBlue)
+                .backgroundColor(R.color.moon)
                 .buttonsColor(R.color.colorAccent)
-                .image(R.drawable.lotto_machine)
-                .description("운명의 숫자\n오늘의 숫자가 궁금하신가요?\n소울로또를 시작해봅시다!")
+                .image(R.raw.moon)
+                .description(getString(R.string.soul_lotto_description_3))
                 .build(), new MessageButtonBehaviour(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CalendarDatePickerDialogFragment cdp = new CalendarDatePickerDialogFragment()
-                        .setOnDateSetListener(new CalendarDatePickerDialogFragment.OnDateSetListener() {
-                            @Override
-                            public void onDateSet(CalendarDatePickerDialogFragment dialog, int year, int monthOfYear, int dayOfMonth) {
-                                String birthDayYmdt = String.valueOf(year) + String.valueOf(monthOfYear + 1) + String.valueOf(dayOfMonth);
-                                LottoCreator lottoCreator = new LottoCreator(Integer.parseInt(birthDayYmdt));
-                                DialogHelper.showSoulNumberDialog(IntroActivity.this, lottoCreator.getSoulNumber(), Integer.parseInt(birthDayYmdt));
-                            }
-                        })
-                        .setFirstDayOfWeek(Calendar.SUNDAY)
-                        .setCancelText(null)
-                        .setDoneText("확인");
-
-                cdp.show(getSupportFragmentManager(), "tag");
+                showDialog();
 
             }
-        }, "생년월일 입력하기"));
+        }, getString(R.string.enter_birthday)));
 
         enableLastSlideAlphaExitTransition(true);
 
@@ -83,9 +66,26 @@ public class IntroActivity extends MaterialIntroActivity {
 
     }
 
+    private void showDialog() {
+        CalendarDatePickerDialogFragment cdp = new CalendarDatePickerDialogFragment()
+                .setOnDateSetListener(new CalendarDatePickerDialogFragment.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(CalendarDatePickerDialogFragment dialog, int year, int monthOfYear, int dayOfMonth) {
+                        String birthDayYmdt = String.valueOf(year) + String.valueOf(monthOfYear + 1) + String.valueOf(dayOfMonth);
+                        LottoCreator lottoCreator = new LottoCreator(Integer.parseInt(birthDayYmdt));
+                        DialogHelper.showSoulNumberDialog(IntroActivity.this, lottoCreator.getSoulNumber(), Integer.parseInt(birthDayYmdt));
+                    }
+                })
+                .setFirstDayOfWeek(Calendar.SUNDAY)
+                .setCancelText(null)
+                .setDoneText(getString(R.string.confirm));
+
+        cdp.show(getSupportFragmentManager(), "tag");
+    }
+
 
     @Override
     public void onFinish() {
-        Toast.makeText(this, "생년월일을 입력해주세요!", Toast.LENGTH_SHORT).show();
+        showDialog();
     }
 }
