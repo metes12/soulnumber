@@ -1,5 +1,6 @@
 package agency.tango.materialintroscreen.listeners;
 
+import android.graphics.Color;
 import android.util.SparseArray;
 import android.view.View;
 import android.view.animation.AnimationUtils;
@@ -38,6 +39,7 @@ public class MessageButtonBehaviourOnPageSelected implements IPageSelectedListen
             });
         } else if (checkIfMessageButtonHasBehaviour(position)) {
             showMessageButton(slideFragment);
+            messageButton.setTextColor(Color.BLACK);
             messageButton.setText(messageButtonBehaviours.get(position).getMessageButtonText());
             messageButton.setOnClickListener(messageButtonBehaviours.get(position).getClickListener());
         } else if (messageButton.getVisibility() != View.INVISIBLE) {
