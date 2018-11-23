@@ -1,18 +1,14 @@
 package com.soullotto.utils;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.support.v4.app.SupportActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.codetroopers.betterpickers.calendardatepicker.CalendarDatePickerDialogFragment;
-import com.soullotto.IntroActivity;
 import com.soullotto.SoulNumberActivity;
-import com.soullotto.commons.Constants;
+import com.soullotto.SoulNumberSolveActivity;
 import com.soullotto.soullotto.R;
 import com.soullotto.soulnumber.LottoCreator;
 import com.soullotto.utils.dialog.Animation;
@@ -20,14 +16,11 @@ import com.soullotto.utils.dialog.FancyAlertDialog;
 import com.soullotto.utils.dialog.FancyAlertDialogListener;
 import com.soullotto.utils.dialog.Icon;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
 
 public class DialogHelper {
 
-    public static void showBirthDayDialog(final AppCompatActivity activity) {
+    public static void showBirthDayDialog(final AppCompatActivity activity, boolean cancelable) {
         CalendarDatePickerDialogFragment cdp = new CalendarDatePickerDialogFragment()
                 .setOnDateSetListener(new CalendarDatePickerDialogFragment.OnDateSetListener() {
                     @Override
@@ -39,6 +32,7 @@ public class DialogHelper {
                 })
                 .setFirstDayOfWeek(Calendar.SUNDAY)
                 .setCancelText(null)
+                .setDialogCancelable(cancelable)
                 .setDoneText(activity.getString(R.string.confirm));
 
         cdp.show(activity.getSupportFragmentManager(), "tag");
@@ -51,12 +45,13 @@ public class DialogHelper {
                 .setMessage2("입니다!")
                 .setMessage(String.valueOf(soulNumber))
                 .setPositiveBtnText("시작하기")
+                .setNegativeBtnText("해석보기")
                 .setPositiveBtnBackground(Color.parseColor("#FF4081"))
                 .setNegativeBtnBackground(Color.parseColor("#FFA9A7A8"))
                 .setAnimation(Animation.POP)
                 .isCancellable(true)
                 .setIcon(R.drawable.ic_star_border_black_24dp,Icon.Visible)
-                .setNegativeBtnVisibility(View.GONE)
+                .setNegativeBtnVisibility(View.VISIBLE)
                 .OnPositiveClicked(new FancyAlertDialogListener() {
                     @Override
                     public void OnClick() {
@@ -64,6 +59,15 @@ public class DialogHelper {
 
                         Intent intent = new Intent(activity, SoulNumberActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        activity.startActivity(intent);
+                    }
+                })
+                .OnNegativeClicked(new FancyAlertDialogListener() {
+                    @Override
+                    public void OnClick() {
+                        SoulNumberHelper.saveBirthDay(birthDay, activity.getApplicationContext());
+                        Intent intent = new Intent(activity, SoulNumberSolveActivity.class);
+                        intent.putExtra(SoulNumberSolveActivity.PARAM_INITIAL_PAGE, true);
                         activity.startActivity(intent);
                     }
                 })

@@ -17,6 +17,9 @@ import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.soullotto.soullotto.R;
 import com.soullotto.soulnumber.LottoCreator;
@@ -57,6 +60,8 @@ public class SoulNumberActivity extends AppCompatActivity implements RapidFloati
     private LinearLayout linearLayoutInclude;
     private GridLayout gridLotto;
 
+    private AdView adView;
+
     private List<Integer> exceptList = new ArrayList<>();
     private List<Integer> includeList = new ArrayList<>();
 
@@ -78,6 +83,7 @@ public class SoulNumberActivity extends AppCompatActivity implements RapidFloati
 
         rfaLayout = findViewById(R.id.activity_main_rfal);
         rfaBtn = findViewById(R.id.activity_main_rfab);
+        adView = findViewById(R.id.adView);
 
         imgvSoul = findViewById(R.id.imgv_soul);
         imgvToday = findViewById(R.id.imgv_today);
@@ -92,6 +98,9 @@ public class SoulNumberActivity extends AppCompatActivity implements RapidFloati
         linearLayoutNumbers = findViewById(R.id.linerv_numbers);
         imgvSoul.setText(String.valueOf(lottoCreator.getSoulNumber()));
         imgvToday.setText(String.valueOf(lottoCreator.getTodayNumber(this)));
+
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adView.loadAd(adRequest);
 
         BallHelper.makeColorBall(imgvSoul);
         BallHelper.makeColorBall(imgvToday);
@@ -157,11 +166,17 @@ public class SoulNumberActivity extends AppCompatActivity implements RapidFloati
     }
 
     private void onLicenseButtonClicked() {
+        Intent intent = new Intent(this, LicenseActivity.class);
+        startActivity(intent);
+    }
 
+    private void onSolveButtonClicked() {
+        Intent intent = new Intent(this, SoulNumberSolveActivity.class);
+        startActivity(intent);
     }
 
     private void onInitBirthdayButtonClicked() {
-        DialogHelper.showBirthDayDialog(this);
+        DialogHelper.showBirthDayDialog(this, true);
     }
 
     @Override
@@ -213,8 +228,10 @@ public class SoulNumberActivity extends AppCompatActivity implements RapidFloati
             onIncludeButtonClicked();
         } else if (label.equals(getString(R.string.init_birthday))) {
             onInitBirthdayButtonClicked();
-        } if (label.equals(getString(R.string.creator_license))) {
+        } else if (label.equals(getString(R.string.creator_license))) {
             onLicenseButtonClicked();
+        } else if (label.equals(getString(R.string.soul_number_solve))) {
+            onSolveButtonClicked();
         }
     }
 
@@ -225,6 +242,15 @@ public class SoulNumberActivity extends AppCompatActivity implements RapidFloati
 
         items.add(new RFACLabelItem<Integer>()
                 .setLabel(getString(R.string.creator_license))
+                .setResId(R.drawable.settings)
+                .setIconNormalColor(0xff4e342e)
+                .setIconPressedColor(0xff3e2723)
+                .setLabelColor(Color.GRAY)
+                .setWrapper(4)
+        );
+
+        items.add(new RFACLabelItem<Integer>()
+                .setLabel(getString(R.string.soul_number_solve))
                 .setResId(R.drawable.settings)
                 .setIconNormalColor(0xff283593)
                 .setIconPressedColor(0xff1a237e)

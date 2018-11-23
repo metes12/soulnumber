@@ -10,4 +10,5 @@
     <string name="include_number">포함할 숫자</string>
     <string name="init_birthday">생년월일 초기화</string>
     <string name="creator_license">제작자 / 오픈소스 라이선스</string>
+    <string name="soul_number_solve">소울넘버 해석보기</string>
 </resources>

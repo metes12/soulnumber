@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bpWhite">
@@ -205,7 +206,7 @@
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="15dp"
+        android:layout_marginBottom="60dp"
         android:onClick="onLottoButtonClicked"
         android:src="@drawable/coins" />
 
@@ -225,7 +226,7 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
             android:layout_marginRight="15dp"
-            android:layout_marginBottom="15dp"
+            android:layout_marginBottom="60dp"
             android:padding="8dp"
             rfab:rfab_size="normal"
             rfab:rfab_drawable="@drawable/rfab__drawable_rfab_default"
@@ -233,5 +234,14 @@
             rfab:rfab_color_pressed="@color/bpblack"
             />
     </com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout>
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        ads:adSize="BANNER"
+        ads:adUnitId="ca-app-pub-3940256099942544/6300978111"/>
 
 </RelativeLayout>

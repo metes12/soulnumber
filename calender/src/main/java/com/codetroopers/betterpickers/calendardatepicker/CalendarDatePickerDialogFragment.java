@@ -107,6 +107,7 @@ public class CalendarDatePickerDialogFragment extends DialogFragment implements 
     private CalendarDay mMaxDate = DEFAULT_END_DATE;
     private String mDoneText;
     private String mCancelText;
+    private boolean cancelable;
 
     private SparseArray<CalendarDay> mDisabledDays;
 
@@ -186,6 +187,11 @@ public class CalendarDatePickerDialogFragment extends DialogFragment implements 
         return this;
     }
 
+    public CalendarDatePickerDialogFragment setDialogCancelable(boolean cancelable) {
+        this.cancelable = cancelable;
+        return this;
+    }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -197,7 +203,7 @@ public class CalendarDatePickerDialogFragment extends DialogFragment implements 
             mCalendar.set(Calendar.MONTH, savedInstanceState.getInt(KEY_SELECTED_MONTH));
             mCalendar.set(Calendar.DAY_OF_MONTH, savedInstanceState.getInt(KEY_SELECTED_DAY));
         }
-        setCancelable(false);
+        setCancelable(cancelable);
     }
 
     @Override

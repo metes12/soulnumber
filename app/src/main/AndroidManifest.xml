@@ -21,7 +21,9 @@
             android:value="ca-app-pub-1611757228618027~9373727028" />
 
         <activity android:name="com.soullotto.SoulNumberActivity" android:theme="@style/Theme.Intro"/>
+        <activity android:name="com.soullotto.LicenseActivity" android:theme="@style/Theme.Intro"/>
         <activity android:name="com.soullotto.LottoSelectAcivity" />
+        <activity android:name="com.soullotto.SoulNumberSolveActivity" android:theme="@style/Theme.Intro"/>
         <activity
             android:name="com.soullotto.IntroActivity"
             android:theme="@style/Theme.Intro" />
