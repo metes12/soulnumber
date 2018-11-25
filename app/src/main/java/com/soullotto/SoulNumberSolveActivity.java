@@ -1,6 +1,7 @@
 package com.soullotto;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +10,8 @@ import android.webkit.WebView;
 import android.widget.RelativeLayout;
 
 import com.soullotto.soullotto.R;
+import com.soullotto.soulnumber.LottoCreator;
+import com.soullotto.utils.SoulNumberHelper;
 
 public class SoulNumberSolveActivity extends AppCompatActivity {
 
@@ -28,9 +31,18 @@ public class SoulNumberSolveActivity extends AppCompatActivity {
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         webView.setLayoutParams(params);
 
-        root.addView(webView);
+        Resources res = getResources();
+        String[] solveArray = res.getStringArray(R.array.solve_array);
 
-        webView.loadUrl("file:///android_asset/solve.html");
+        int birthDay = SoulNumberHelper.getBirthDay(getApplicationContext());
+        LottoCreator lottoCreator = new LottoCreator(birthDay);
+        int soulNumber = lottoCreator.getSoulNumber();
+        int fileIndex = (soulNumber / 10) + (soulNumber % 10);
+
+        String filePath = solveArray[fileIndex];
+
+        root.addView(webView);
+        webView.loadUrl(filePath);
     }
 
     @Override

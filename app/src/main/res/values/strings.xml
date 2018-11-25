@@ -11,4 +11,5 @@
     <string name="init_birthday" translatable="false">생년월일 초기화</string>
     <string name="creator_license" translatable="false">제작자 / 오픈소스 라이선스</string>
     <string name="soul_number_solve" translatable="false">소울넘버 해석보기</string>
+    <string name="soul_number_result" translatable="false">당첨번호 보기 </string>
 </resources>

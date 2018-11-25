@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="solve_array">
+    <item >file:///android_asset/solve0.html</item>
+    <item >file:///android_asset/solve1.html</item>
+    <item >file:///android_asset/solve2.html</item>
+    <item >file:///android_asset/solve3.html</item>
+    <item >file:///android_asset/solve4.html</item>
+    <item >file:///android_asset/solve5.html</item>
+    <item >file:///android_asset/solve6.html</item>
+    <item >file:///android_asset/solve7.html</item>
+    <item >file:///android_asset/solve8.html</item>
+    <item >file:///android_asset/solve9.html</item>
+    </string-array>
+</resources>

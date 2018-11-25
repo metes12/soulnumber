@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.ImageView;
@@ -93,7 +95,7 @@ public class SoulNumberActivity extends AppCompatActivity implements RapidFloati
         btnLotto = findViewById(R.id.btn_get_lotto);
 
         linearLayoutExcept = findViewById(R.id.linearv_except);
-        linearLayoutInclude = findViewById(R.id.linearv_include);
+        linearLayoutInclude = findViewById(R.id.linearv_inlucde);
 
         gridLotto = findViewById(R.id.gridv_lotto);
 
@@ -134,12 +136,12 @@ public class SoulNumberActivity extends AppCompatActivity implements RapidFloati
         new Thread(new Runnable() {
             @Override
             public void run() {
-                final int [] exceptArray = BallHelper.convertIntegers(exceptList);
-                final int [] includeArray = BallHelper.convertIntegers(includeList);
+                final int[] exceptArray = BallHelper.convertIntegers(exceptList);
+                final int[] includeArray = BallHelper.convertIntegers(includeList);
 
                 final LottoNumbers lottoNumbers = new LottoNumbers();
 
-                for (int i=0; i<5; i++) {
+                for (int i = 0; i < 5; i++) {
                     lottoNumbers.add(lottoCreator.getIncludeExcept(exceptArray, includeArray));
                     SystemClock.sleep(MS_SHAKE_TIME / 5);
                 }
@@ -202,6 +204,11 @@ public class SoulNumberActivity extends AppCompatActivity implements RapidFloati
         startActivity(intent);
     }
 
+    private void onResultButtonClicked() {
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://m.nlotto.co.kr/gameResult.do?method=byWin"), this, WebView.class);
+        startActivity(intent);
+    }
+
     private void onInitBirthdayButtonClicked() {
         DialogHelper.showBirthDayDialog(this, true);
     }
@@ -259,6 +266,8 @@ public class SoulNumberActivity extends AppCompatActivity implements RapidFloati
             onLicenseButtonClicked();
         } else if (label.equals(getString(R.string.soul_number_solve))) {
             onSolveButtonClicked();
+        } else if (label.equals(getString(R.string.soul_number_result))) {
+            onResultButtonClicked();
         }
     }
 
@@ -274,6 +283,15 @@ public class SoulNumberActivity extends AppCompatActivity implements RapidFloati
                 .setIconPressedColor(0xff3e2723)
                 .setLabelColor(Color.GRAY)
                 .setWrapper(4)
+        );
+
+        items.add(new RFACLabelItem<Integer>()
+                .setLabel(getString(R.string.soul_number_result))
+                .setResId(R.drawable.settings)
+                .setIconNormalColor(Color.parseColor("#ffd700"))
+                .setIconPressedColor(0xff1a237e)
+                .setLabelColor(Color.parseColor("#ffd700"))
+                .setWrapper(3)
         );
 
         items.add(new RFACLabelItem<Integer>()
@@ -328,8 +346,8 @@ public class SoulNumberActivity extends AppCompatActivity implements RapidFloati
         calendar.set(Calendar.MINUTE, 15);
         calendar.set(Calendar.SECOND, 0);
         Intent intent = new Intent(this, LottoNumberReceiver.class);
-        PendingIntent pi = PendingIntent.getService(this, ALARM_REQUEST_CODE, intent,PendingIntent.FLAG_UPDATE_CURRENT);
-        AlarmManager am = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+        PendingIntent pi = PendingIntent.getService(this, ALARM_REQUEST_CODE, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY * 7, pi);
 
         //initialize except, include views
@@ -344,7 +362,7 @@ public class SoulNumberActivity extends AppCompatActivity implements RapidFloati
 
         if (lottoNumbers != null) {
             gridLotto.removeAllViews();
-            for (int i = 0; i< lottoNumbers.getSize(); i++) {
+            for (int i = 0; i < lottoNumbers.getSize(); i++) {
                 int[] lotto = lottoNumbers.getLottoMap(i);
                 for (int j = 0; j < lotto.length; j++) {
                     gridLotto.addView(BallHelper.makeNumberBall(SoulNumberActivity.this, lotto[j]));
