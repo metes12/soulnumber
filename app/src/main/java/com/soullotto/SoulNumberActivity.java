@@ -7,10 +7,12 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.WebView;
@@ -18,10 +20,12 @@ import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
+import com.soullotto.commons.Constants;
 import com.soullotto.soullotto.R;
 import com.soullotto.soulnumber.LottoCreator;
 import com.soullotto.soulnumber.LottoNumbers;
@@ -43,7 +47,6 @@ import java.util.List;
 public class SoulNumberActivity extends AppCompatActivity implements RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener {
 
     private static final String ADMOB_ID = "ca-app-pub-1611757228618027~9373727028";
-    private static final String ADMOB_REWARD_ID = "ca-app-pub-1611757228618027/6901855127";
 
     public static final int MS_SHAKE_TIME = 3500;
 
@@ -153,10 +156,11 @@ public class SoulNumberActivity extends AppCompatActivity implements RapidFloati
 
                         for (int i = 0; i < 5; i++) {
                             int[] lotto = lottoNumbers.getLottoMap(i);
-
                             for (int j = 0; j < lotto.length; j++) {
                                 gridLotto.addView(BallHelper.makeNumberBall(SoulNumberActivity.this, lotto[j]));
                             }
+
+                            makeLine(lotto);
                         }
 
                         SoulNumberHelper.saveLottoNumber(SoulNumberActivity.this, lottoNumbers);
@@ -164,6 +168,30 @@ public class SoulNumberActivity extends AppCompatActivity implements RapidFloati
                 });
             }
         }).start();
+    }
+
+    private void makeLine(int[] lotto) {
+        for (int j = 0; j < lotto.length; j++) {
+            View line = new View(SoulNumberActivity.this);
+            line.setBackgroundColor(Color.TRANSPARENT);
+            line.setLayoutParams(new ViewGroup.LayoutParams((int) BallHelper.dpToPixel(getApplicationContext(), Constants.DP_BUTTON_SIZE), 6));
+            gridLotto.addView(line);
+        }
+
+        for (int j = 0; j < lotto.length; j++) {
+            View line = new View(SoulNumberActivity.this);
+            line.setAlpha(0.5f);
+            line.setBackgroundColor(Color.WHITE);
+            line.setLayoutParams(new ViewGroup.LayoutParams((int) BallHelper.dpToPixel(getApplicationContext(), Constants.DP_BUTTON_SIZE), 6));
+            gridLotto.addView(line);
+        }
+
+        for (int j = 0; j < lotto.length; j++) {
+            View line = new View(SoulNumberActivity.this);
+            line.setBackgroundColor(Color.TRANSPARENT);
+            line.setLayoutParams(new ViewGroup.LayoutParams((int) BallHelper.dpToPixel(getApplicationContext(), Constants.DP_BUTTON_SIZE), 18));
+            gridLotto.addView(line);
+        }
     }
 
     private void onLicenseButtonClicked() {
@@ -339,7 +367,29 @@ public class SoulNumberActivity extends AppCompatActivity implements RapidFloati
                 for (int j = 0; j < lotto.length; j++) {
                     gridLotto.addView(BallHelper.makeNumberBall(SoulNumberActivity.this, lotto[j]));
                 }
+                makeLine(lotto);
             }
         }
+    }
+
+    boolean doubleBackToExitPressedOnce = false;
+
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "두 번 클릭시 앱을 종료합니다.", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 2000);
     }
 }

@@ -1,15 +1,15 @@
 <resources>
-    <string name="app_name" translatable="false">SoulNumber</string>
+    <string name="app_name" translatable="false">SoulLotto</string>
     <string name="soul_lotto_title" translatable="false">Soul Lotto</string>
     <string name="soul_lotto_description_1" translatable="false">Soul Lotto에 오신 것을 환영합니다!</string>
-    <string name="soul_lotto_description_2">Soul Lotto는 생년월일 및 오늘의 숫자를 바탕으로 로또 번호를 이쁘게 뽑아줍니다</string>
-    <string name="soul_lotto_description_3">운명의 숫자 오늘의 숫자가 궁금하신가요? 소울로또를 시작해봅시다!</string>
-    <string name="confirm">확인</string>
-    <string name="enter_birthday">생년월일 입력하기</string>
-    <string name="except_number">제외할 숫자</string>
-    <string name="include_number">포함할 숫자</string>
-    <string name="init_birthday">생년월일 초기화</string>
-    <string name="creator_license">제작자 / 오픈소스 라이선스</string>
-    <string name="soul_number_solve">소울넘버 해석보기</string>
-    <string name="soul_number_result">당첨번호 보기 </string>
+    <string name="soul_lotto_description_2" translatable="false">Soul Lotto는 생년월일 및 오늘의 숫자를 바탕으로 로또 번호를 이쁘게 뽑아줍니다</string>
+    <string name="soul_lotto_description_3" translatable="false">운명의 숫자 오늘의 숫자가 궁금하신가요? 소울로또를 시작해봅시다!</string>
+    <string name="confirm" translatable="false">확인</string>
+    <string name="enter_birthday" translatable="false">생년월일 입력하기</string>
+    <string name="except_number" translatable="false">제외할 숫자</string>
+    <string name="include_number" translatable="false">포함할 숫자</string>
+    <string name="init_birthday" translatable="false">생년월일 초기화</string>
+    <string name="creator_license" translatable="false">제작자 / 오픈소스 라이선스</string>
+    <string name="soul_number_solve" translatable="false">소울넘버 해석보기</string>
+    <string name="soul_number_result" translatable="false">당첨번호 보기 </string>
 </resources>
