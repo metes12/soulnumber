@@ -46,7 +46,7 @@ import java.util.List;
 
 public class SoulNumberActivity extends AppCompatActivity implements RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener {
 
-    private static final String ADMOB_ID = "ca-app-pub-1611757228618027~9373727028";
+    private static final String ADMOB_ID = "ca-app-pub-2862102477506412~2571582083";
 
     public static final int MS_SHAKE_TIME = 3500;
 
