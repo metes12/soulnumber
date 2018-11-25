@@ -177,15 +177,21 @@
 
         </LinearLayout>
 
-        <GridLayout
-            android:layout_gravity="center"
-            android:id="@+id/gridv_lotto"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:columnCount="6"
-            android:orientation="horizontal" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_marginBottom="125dp"
+            android:layout_height="match_parent">
 
+            <GridLayout
+                android:layout_centerInParent="true"
+                android:id="@+id/gridv_lotto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:columnCount="6"
+                android:orientation="horizontal" />
+
+        </RelativeLayout>
 
     </LinearLayout>
 
